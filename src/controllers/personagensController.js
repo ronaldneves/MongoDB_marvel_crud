@@ -11,7 +11,7 @@ class personagensController {
         }
     }
 
-    static async listarPersonagensPorID(req, res) {
+    static async buscarPersonagensPorID(req, res) {
         try {
             const id = req.params.id;
             const listaDePersonagens = await personagens.findById(id);
@@ -19,6 +19,17 @@ class personagensController {
         }
         catch (err) {
             res.status(500).send({message: `${err.message} - falha ao buscar ID na dabatase`});
+        }
+    }
+
+    static async buscarPersonagensPorNome(req, res) {
+        try {
+            const nome = req.query.nome;
+            const listaDeNomes = await personagens.find({'realName' : nome});
+            res.status(200).json(listaDeNomes);
+        }
+        catch (err) {
+            res.status(500).send({message: `${err.message} - personagem não encontrado.`});
         }
     }
 
